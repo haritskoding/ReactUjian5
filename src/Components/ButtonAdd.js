@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 8,
         marginLeft: 80,
+        marginBottom: 30,
         marginTop: 30
     },
     text: {

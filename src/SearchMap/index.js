@@ -32,7 +32,7 @@ export class SearchMap extends Component {
         return (
             <View style={styles.container}>
                 <View style={{ width: "44%" }}>
-                    <Text>Lat {this.props.lat}</Text>
+                    <Text>Lat </Text><Text style={{ fontWeight: 'bold' }}>{this.props.lat.toFixed(7)}</Text>
                     {/* <TextInput
                         style={styles.input}
                         onChangeText={(e) => this.setState({ latitude: e })}
@@ -43,7 +43,7 @@ export class SearchMap extends Component {
 
                 </View>
                 <View style={{ width: "40%" }}>
-                    <Text>Long {this.props.long}</Text>
+                    <Text>Long </Text><Text style={{ fontWeight: 'bold' }}>{this.props.long.toFixed(7)}</Text>
                     {/* <Text>Lng:{this.state.region.longitude}</Text>
                     <TextInput
                         style={styles.input}

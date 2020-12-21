@@ -14,6 +14,7 @@ import {
 import ButtonAdd from '../Components/ButtonAdd';
 import InputData from '../Components/InputData';
 import TeguhMap from '../TeguhMap.js';
+import FIREBASE from '../config/FIREBASE'
 
 class AddUser extends Component {
 
@@ -24,8 +25,7 @@ class AddUser extends Component {
             nama: '',
             gender: 'Male',
             umur: '',
-            lat: '',
-            long: '',
+            image: 'https://www.innofied.com/wp-content/uploads/2018/12/2018-12-06.jpg',
             status: 'Singel',
             region: {
                 latitudeDelta: 0.0222,
@@ -90,9 +90,30 @@ class AddUser extends Component {
     onSubmit = () => {
         if (this.state.nama && this.state.umur) {
             console.log('hallo', this.state);
+
+            const kontakReferensi = FIREBASE.database().ref("DataPegawai");
+            const kontak = {
+                nama: this.state.nama,
+                gender: this.state.gender,
+                umur: this.state.umur,
+                image: this.state.image,
+                status: this.state.status,
+                latitude: this.state.region.latitude,
+                longitude: this.state.region.longitude
+            }
+            kontakReferensi
+                .push(kontak)
+                .then((data) => {
+                    Alert.alert("Sukses", "Kontak berhasil tersimpan")
+                    // this.props.navigation.replace("Home");
+                })
+                .catch((error) => {
+                    console.log("Error", error);
+                })
         } else {
             Alert('Diisi seumanya ya friend')
         }
+
     }
 
     render() {
@@ -143,11 +164,14 @@ class AddUser extends Component {
                         </Picker>
 
                         <View style={styles.columnImage}>
-                            <View>
-                                <Text style={{ color: 'red' }}>sjn</Text>
+                            <View style={{ width: 100 }}>
+                                <Image style={{ width: 90, height: 70, objectFit: 'cover' }}
+                                    source={require('../assets/camera.png')}
+                                />
                             </View>
-                            <View>
-                                <Text>ks</Text>
+
+                            <View style={{ padding: 12, backgroundColor: 'skyblue', borderRadius: 8, height: 48 }}>
+                                <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Photo</Text>
                             </View>
                         </View>
 
@@ -167,13 +191,8 @@ class AddUser extends Component {
                         <Text style={styles.textTombol}>Tambah Pegawai</Text>
                     </TouchableOpacity>
 
-
                 </View>
             </ScrollView >
-
-
-
-
         )
     }
 }
@@ -197,7 +216,9 @@ const styles = StyleSheet.create({
         padding: 12,
         borderRadius: 5,
         marginTop: 10,
-        width: "90%"
+        marginBottom: 30,
+        width: "70%",
+        marginLeft: 54,
     },
     textTombol: {
         color: "white",
@@ -230,6 +251,8 @@ const styles = StyleSheet.create({
     columnImage: {
         flexDirection: 'row',
         width: '90%',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: 8,
+        marginTop: 5
     }
 })
